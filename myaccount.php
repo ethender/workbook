@@ -3,6 +3,7 @@
     
     include 'helpers.php';
     
+    // professional login
     if(isset($_POST['login-submit'])){
         
         $username = htmlspecialchars($_POST['username']);
@@ -19,6 +20,21 @@
             echo "<script>alert('check your username & password');</script>";
         }
         
+    }
+    
+    // standard login
+    if(isset($_POST['standard-submit'])){
+        $username = htmlspecialchars($_POST['username']);
+        $password = md5($_POST['password']);
+        
+        $query = "SELECT * FROM standarduser WHERE email='$username'AND password='$password'";
+        $resultQuery = mysql_query($query);
+        
+        if(mysql_num_rows($resultQuery) == 1){
+            header("Location:home.php");
+        }else{
+            echo "<script>alert('check username , password');</script>";
+        }
     }
     
 ?>
@@ -97,7 +113,7 @@
 <div class="col-lg-12">
 <form id="Standard-form" action="myaccount.php" method="post" role="form" style="display: block;">
 <div class="form-group">
-<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+<input type="email" name="username" id="username" tabindex="1" class="form-control" placeholder="Email" value="">
 </div>
 <div class="form-group">
 <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
@@ -109,7 +125,7 @@
 <div class="form-group">
 <div class="row">
 <div class="col-sm-6 col-sm-offset-3">
-<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+<input type="submit" name="standard-submit" id="standard-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
 </div>
 </div>
 </div>
@@ -118,7 +134,7 @@
 <div class="col-lg-12">
 <div class="text-center">
 <a href="" tabindex="5" class="forgot-password">Forgot Password?</a><hr>
-<strong><a href=""  id="" style="color:rgb(83, 195, 164);font-size:18px;">New user?</a></strong>
+<strong><a href="standard_registration.php"  id="" style="color:rgb(83, 195, 164);font-size:18px;">New user?</a></strong>
 </div>
 </div>
 </div>
