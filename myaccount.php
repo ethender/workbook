@@ -15,6 +15,7 @@
         $resultQuery = mysql_query($getQuery);
         //echo "\n".$resultQuery;
         if(mysql_num_rows($resultQuery) == 1){
+            while()
             header("Location:home.php");
         }else{
             echo "<script>alert('check your username & password');</script>";
