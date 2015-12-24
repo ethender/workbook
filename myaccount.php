@@ -1,9 +1,27 @@
 <?php
     session_start();
     
+    include 'helpers.php';
     
+    if(isset($_POST['login-submit'])){
+        
+        $username = htmlspecialchars($_POST['username']);
+        $password = md5($_POST['password']);
+        
+        //echo "name: ".$username."\n".$password;
+        $getQuery = "SELECT * FROM companyUsers WHERE userAdminLogin='$username'AND userAdminPass='$password'";
+        
+        $resultQuery = mysql_query($getQuery);
+        //echo "\n".$resultQuery;
+        if(mysql_num_rows($resultQuery) == 1){
+            header("Location:home.php");
+        }else{
+            echo "<script>alert('check your username & password');</script>";
+        }
+        
+    }
     
-    ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,28 +126,10 @@
 </form>
 
 <!--  professional login -->
-<?php
-    include 'helpers.php';
-    
-    $username = htmlspecialchars($_POST['username']);
-    $password = md5($_POST['password']);
-    
-    $getQuery = "SELECT * FROM companyUsers WHERE userAdminLogin='$username',userAdminPass='$password'";
-    
-    $resultQuery = insertTable($getQuery);
-    
-    if(mysql_num_rows($resultQuery) == 1){
-        header("Location:home.php");
-    }else{
-        echo "<script>alert('check your username & password');</script>";
-    }
-    
-    
-    ?>
 
 
 
-<form id="Professional-form" action="" method="post" role="form" style="display: none;">
+<form id="Professional-form" action="myaccount.php" method="post" role="form" style="display: none;">
 <div class="form-group">
 <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
 </div>
