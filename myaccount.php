@@ -1,30 +1,14 @@
 <?php
     session_start();
     
-    include 'helpers.php';
+    include 'connection.php';
     
-    // professional login
-    if(isset($_POST['login-submit'])){
-        
-        $username = htmlspecialchars($_POST['username']);
-        $password = md5($_POST['password']);
-        
-        //echo "name: ".$username."\n".$password;
-        $getQuery = "SELECT * FROM companyUsers WHERE userAdminLogin='$username'AND userAdminPass='$password'";
-        
-        $resultQuery = mysql_query($getQuery);
-        //echo "\n".$resultQuery;
-        if(mysql_num_rows($resultQuery) == 1){
-            while()
-            header("Location:home.php");
-        }else{
-            echo "<script>alert('check your username & password');</script>";
-        }
-        
-    }
+
     
     // standard login
     if(isset($_POST['standard-submit'])){
+        $database = new connection();
+        
         $username = htmlspecialchars($_POST['username']);
         $password = md5($_POST['password']);
         
